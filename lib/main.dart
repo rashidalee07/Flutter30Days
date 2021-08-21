@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_catalog/home_page.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  // for now constructor is not required as we are not sending any data.ck
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         // without using materialapp we can not use directly widgets
-        home: Material(
-      // to make screen look pleasent use material
-      child: Center(
-          child: Container(
-        child: Text(
-            "This is some random texty"), // the text has move to top of the
-        //screen we will center widget using Center class/widget
-      )),
-    ));
+        home: HomePage());
   }
 }
