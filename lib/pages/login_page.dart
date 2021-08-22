@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_catalog/utils/routes.dart';
 
 class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -35,10 +36,10 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    print("Hi Ticky");
+                    Navigator.popAndPushNamed(context, MyRoutes.homeRoute);
                   },
                   child: Text("Login"),
-                  style: TextButton.styleFrom(),
+                  style: TextButton.styleFrom(minimumSize: Size(150, 40)),
                 )
               ],
             ),
