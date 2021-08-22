@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
           child: Container(
         child: Text(
             "Welcome to flutter $days days coding by $name "), // the text has move to top of the
-        //screen we will center widget using Center class/widget
+        //screen we will center text using Center class/widget
       )),
       drawer: Drawer(),
     );
