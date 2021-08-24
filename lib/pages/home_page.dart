@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_catalog/widgets/drawer.dart';
 
 class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -6,7 +7,9 @@ class HomePage extends StatelessWidget {
     final String name = "Ticky";
     return Scaffold(
       appBar: AppBar(
-        title: Text("App Catalog"),
+        title: Text(
+          "App Catalog",
+        ),
       ),
       // to make screen look pleasent use material
       body: Center(
@@ -15,7 +18,7 @@ class HomePage extends StatelessWidget {
             "Welcome to flutter $days days coding by $name "), // the text has move to top of the
         //screen we will center text using Center class/widget
       )),
-      drawer: Drawer(),
+      drawer: MyDrawer(),
     );
   }
 }

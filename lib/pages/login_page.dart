@@ -9,10 +9,25 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String name = "";
   bool changeButton = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  moveToNextPage(BuildContext build) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        changeButton = true;
+      });
+      await Future.delayed(Duration(seconds: 1));
+      await Navigator.pushNamed(context, MyRoutes.homeRoute);
+      setState(() {
+        changeButton = false;
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      child: SingleChildScrollView(
+      child: Form(
+        key: _formKey,
         child: Column(
           children: [
             Image.asset("assets/images/login_image.png", fit: BoxFit.cover),
@@ -32,7 +47,16 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   TextFormField(
                       decoration: InputDecoration(
-                          hintText: "Enter Username", labelText: "Username"),
+                        hintText: "Enter Username",
+                        labelText: "Username",
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return "Username Required";
+                        } else {
+                          return null;
+                        }
+                      },
                       onChanged: (value) {
                         name = value;
                         setState(() {});
@@ -43,47 +67,42 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: "Enter Passward",
                       labelText: "Password",
                     ),
+                    validator: (value) {
+                      if (value != null && value.length < 6) {
+                        return "Password must be greater than 6 digits";
+                      } else if (value != null) {
+                        return null;
+                      } else {
+                        return "Password Required";
+                      }
+                    },
                   ),
                   SizedBox(height: 20),
-                  InkWell(
-                    onTap: () async {
-                      setState(() {
-                        changeButton = true;
-                      });
-                      await Future.delayed(Duration(seconds: 1));
-                      Navigator.pushNamed(context, MyRoutes.homeRoute);
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(seconds: 1),
-                      alignment: Alignment.center,
-                      width: changeButton ? 50 : 150,
-                      height: 40,
-                      child: changeButton
-                          ? Icon(
-                              Icons.done,
-                              color: Colors.white,
-                            )
-                          : Text(
-                              "Login",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                      decoration: BoxDecoration(
-                          color: Colors.blueAccent,
-                          shape: changeButton
-                              ? BoxShape.circle
-                              : BoxShape.rectangle),
+                  Material(
+                    color: Colors.deepPurple,
+                    borderRadius: BorderRadius.circular(changeButton ? 50 : 8),
+                    child: InkWell(
+                      onTap: () => moveToNextPage(context),
+                      child: AnimatedContainer(
+                        duration: Duration(seconds: 1),
+                        alignment: Alignment.center,
+                        width: changeButton ? 50 : 150,
+                        height: 50,
+                        child: changeButton
+                            ? Icon(
+                                Icons.done,
+                                color: Colors.white,
+                              )
+                            : Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                      ),
                     ),
                   )
-                  // ElevatedButton(
-                  // onPressed: () {
-                  // Navigator.popAndPushNamed(context, MyRoutes.homeRoute);
-                  //},
-                  //child: Text("Login"),
-                  //style: TextButton.styleFrom(minimumSize: Size(150, 40)),
-                  // )
                 ],
               ),
             )
